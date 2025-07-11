@@ -1,0 +1,87 @@
+.stepsSection {
+  padding: 4rem 1rem;
+  background: #f9f8f4;
+  position: relative;
+  text-align: center;
+}
+
+.heading {
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: #1b1b1b;
+  margin-bottom: 3rem;
+}
+
+.timelineContainer {
+  position: relative;
+  width: 2px;
+  background: transparent;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 0%;
+  background: linear-gradient(to bottom, #e3a7a7, #a9d3df);
+  border-radius: 2px;
+}
+
+.step {
+  position: relative;
+  margin: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #333;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.text {
+  margin-top: 1rem;
+  opacity: 0;
+  max-width: 300px;
+}
+
+.text h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1b1b1b;
+}
+
+.text p {
+  font-size: 1rem;
+  color: #333;
+}
+
+@media (min-width: 768px) {
+  .timelineContainer {
+    width: 4px;
+  }
+  .step {
+    align-items: flex-start;
+  }
+  .text {
+    text-align: left;
+    max-width: 400px;
+  }
+}
