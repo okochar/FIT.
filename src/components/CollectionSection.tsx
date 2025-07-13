@@ -47,7 +47,11 @@ const products = [
   },
 ];
 
-export default function CollectionSection({ openModal }) {
+interface CollectionSectionProps {
+  openModal: () => void;
+}
+
+export default function CollectionSection({ openModal }: CollectionSectionProps) {
   return (
     <section className={styles.collection}>
       <motion.h2
