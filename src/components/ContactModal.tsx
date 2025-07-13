@@ -15,28 +15,18 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     message: ""
   });
 
-interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> {}
-
-const handleChange = (e: InputChangeEvent): void => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-};
+  };
 
-interface ContactFormData {
-    name: string;
-    email: string;
-    message: string;
-}
-
-interface FormEventWithTarget extends React.FormEvent<HTMLFormElement> {
-    target: EventTarget & HTMLFormElement;
-}
-
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     // send to n8n webhook here later
     console.log(formData);
     onClose(); // close modal after submit
-};
+  };
 
   return (
     <AnimatePresence>
