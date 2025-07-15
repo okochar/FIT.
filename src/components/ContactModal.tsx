@@ -77,8 +77,8 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         preference: "Exact",
       });
       onClose();
-    } catch (err) {
-      toast.error("Failed to send. Please try again.");
+    }catch {
+    toast.error(" Failed to send. Please try again.");
     } finally {
       setLoading(false);
     }

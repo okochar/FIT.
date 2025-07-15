@@ -38,7 +38,7 @@ export default function HeroSection() {
         className={styles.button}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        
+        onClick={() => window.location.href = "#collection"}
       >
         See Collection
       </motion.button>
