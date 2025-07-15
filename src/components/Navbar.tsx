@@ -3,39 +3,38 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./Navbar.module.css";
 import Link from "next/link";
+import ContactModal from "./ContactModal"; // Adjust path if needed
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
 
   return (
-    <motion.nav
-      className={styles.navbar}
-      initial={{ y: -40, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
+    <nav className={styles.navbar}>
       <div className={styles.container}>
         {/* Logo */}
         <Link href="/" className={styles.logo}>FIT.</Link>
 
-        {/* Links */}
+        {/* Links (desktop) */}
         <div className={styles.links}>
-          <a href="#">Home</a>
-          <a href="#">Collection</a>
-          <a href="#">About</a>
-          <a href="#">Contact</a>
+          <a href="/#hero">Home</a>
+          <a href="/#collection">Collection</a>
+          <a href="/#about">About</a>
+          <Link href="/contact">Contact</Link>
         </div>
 
         {/* CTA */}
         <div className={styles.cta}>
-          <button>Order Now</button>
-        </div> 
+          <button onClick={openModal}>Order Now</button>
+        </div>
 
         {/* Hamburger */}
         <div
@@ -49,24 +48,25 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-     <AnimatePresence>
-  {isOpen && (
-    <motion.div
-      className={styles.mobileMenu}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
-    >
-
-
-            <a href="#" onClick={toggleMenu}>Home</a>
-            <a href="#" onClick={toggleMenu}>Collection</a>
-            <a href="#" onClick={toggleMenu}>About</a>
-            <a href="#" onClick={toggleMenu}>Contact</a>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className={styles.mobileMenu}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <a href="/#hero" onClick={toggleMenu}>Home</a>
+            <a href="/#collection" onClick={toggleMenu}>Collection</a>
+            <a href="/#about" onClick={toggleMenu}>About</a>
+            <Link href="/contact" onClick={toggleMenu}>Contact</Link>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+
+      {/* Contact Modal */}
+      <ContactModal isOpen={isModalOpen} onClose={closeModal} />
+    </nav>
   );
 }

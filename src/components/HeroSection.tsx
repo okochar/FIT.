@@ -4,6 +4,7 @@ import styles from "./HeroSection.module.css";
 
 export default function HeroSection() {
   return (
+    <section id="hero" className={styles.hero}>
     <section className={styles.hero}>
       <motion.div
         className={styles.backgroundGradient}
@@ -37,9 +38,11 @@ export default function HeroSection() {
         className={styles.button}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        
       >
         See Collection
       </motion.button>
+    </section>
     </section>
   );
 }

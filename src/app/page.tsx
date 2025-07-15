@@ -12,11 +12,10 @@ export default function Home() {
 
   return (
     <main>
-      <Navbar />
       <HeroSection />
       <CollectionSection openModal={() => setModalOpen(true)} />
       <AboutSection openModal={() => setModalOpen(true)} />
-      <Footer />
+  
       <ContactModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </main>
   );

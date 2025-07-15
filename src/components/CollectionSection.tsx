@@ -53,7 +53,8 @@ interface CollectionSectionProps {
 
 export default function CollectionSection({ openModal }: CollectionSectionProps) {
   return (
-    <section className={styles.collection}>
+
+    <section id="collection"  className={styles.collection}>
       <motion.h2
         className={styles.title}
         initial={{ opacity: 0, y: 20 }}
@@ -99,12 +100,14 @@ export default function CollectionSection({ openModal }: CollectionSectionProps)
         ))}
       </div>
       <motion.button
-        className={styles.seeMore}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        See More
-      </motion.button>
+  className={styles.seeMore}
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={() => window.location.href = "/collection"} // or openModal() if desired
+>
+  See More
+</motion.button>
+
     </section>
   );
 }

@@ -36,6 +36,7 @@
   color: #003049; /* plum */
   font-weight: 500;
   transition: color 0.2s ease;
+  cursor: pointer;
 }
 
 .links a:hover {

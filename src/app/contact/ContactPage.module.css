@@ -1,0 +1,49 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #2e5339;
+  font-family: var(--font-inter, sans-serif);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #2e5339;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-size: 1.05rem;
+}
+
+.contactLink {
+  color: #a9d3df;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.contactLink:hover {
+  color: #e3a7a7;
+}
+
+.responseTime {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.icon {
+  margin-right: 0.5rem;
+}

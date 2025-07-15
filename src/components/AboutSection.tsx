@@ -9,8 +9,28 @@ interface AboutSectionProps {
 
 export default function AboutSection({ openModal }: AboutSectionProps) {
   return (
-    <section className={styles.about}>
-      {/* Image Block */}
+    <section id="about" className={styles.about}>
+      {/* Top title and tagline */}
+      <div className={styles.topHeader}>
+        <motion.h2
+          className={styles.sectionTitle}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          About Us
+        </motion.h2>
+        <motion.p
+          className={styles.tagline}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          Handmade keepsakes that turn memories into meaning.
+        </motion.p>
+      </div>
+
+      {/* Image */}
       <motion.div
         className={styles.imageContainer}
         initial={{ opacity: 0, x: -30 }}
@@ -47,7 +67,6 @@ export default function AboutSection({ openModal }: AboutSectionProps) {
           Because your moments deserve to stay with you.
         </p>
 
-        {/* Why Frozen In Time Subtopic and Bullet Points */}
         <h3 className={styles.subheading}>Why Frozen In Time?</h3>
         <ul className={styles.bulletList}>
           <li>✨ Each piece is handmade to capture memories you can wear.</li>
