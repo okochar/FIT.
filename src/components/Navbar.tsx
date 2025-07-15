@@ -25,9 +25,9 @@ export default function Navbar() {
 
         {/* Links (desktop) */}
         <div className={styles.links}>
-          <a href="/#hero">Home</a>
-          <a href="/#collection">Collection</a>
-          <a href="/#about">About</a>
+          <Link href="/#hero">Home</Link>
+          <Link href="/#collection">Collection</Link>
+          <Link href="/#about">About</Link>
           <Link href="/contact">Contact</Link>
         </div>
 
@@ -57,9 +57,9 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <a href="/#hero" onClick={toggleMenu}>Home</a>
-            <a href="/#collection" onClick={toggleMenu}>Collection</a>
-            <a href="/#about" onClick={toggleMenu}>About</a>
+            <Link href="/#hero" onClick={toggleMenu}>Home</Link>
+            <Link href="/#collection" onClick={toggleMenu}>Collection</Link>
+            <Link href="/#about" onClick={toggleMenu}>About</Link>
             <Link href="/contact" onClick={toggleMenu}>Contact</Link>
           </motion.div>
         )}

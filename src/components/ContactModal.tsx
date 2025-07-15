@@ -11,6 +11,13 @@ interface ContactModalProps {
   onClose: () => void;
 }
 
+// 👉 helper to get min date (today + 3 days)
+const getMinDate = () => {
+  const date = new Date();
+  date.setDate(date.getDate() + 3);
+  return date.toISOString().split("T")[0];
+};
+
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
@@ -28,33 +35,40 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   }, []);
 
   useEffect(() => {
-    if (formData.preference === "Exact") {
-      setCanSubmit(true);
-    } else if (
-      (formData.preference === "Similar" || formData.preference === "Custom") &&
-      formData.message.trim().length >= 10
-    ) {
-      setCanSubmit(true);
-    } else {
-      setCanSubmit(false);
-    }
-  }, [formData.preference, formData.message]);
+    const fieldsFilled = !!formData.name && !!formData.email && !!formData.date;
+    const needsMessage = formData.preference !== "Exact";
+    const validMessage = needsMessage ? formData.message.trim().length >= 10 : true;
+
+    setCanSubmit(fieldsFilled && validMessage);
+  }, [formData]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ): void => {
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!canSubmit) return;
+
     setLoading(true);
+
+    // ✅ extra server-side guard: enforce 3+ days in future
+    const selectedDate = new Date(formData.date);
+    const minAllowedDate = new Date();
+    minAllowedDate.setDate(minAllowedDate.getDate() + 2);
+
+    if (selectedDate < minAllowedDate) {
+      toast.error(" Please select a delivery date at least 3 days in the future.");
+      setLoading(false);
+      return;
+    }
 
     try {
       console.log(formData);
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      toast.success("Message sent!");
+      await new Promise((res) => setTimeout(res, 1200));
+      toast.success(" Message sent successfully!");
       setFormData({
         name: "",
         email: "",
@@ -63,8 +77,8 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         preference: "Exact",
       });
       onClose();
-    } catch (error) {
-      toast.error("Failed to send message.");
+    } catch (err) {
+      toast.error("Failed to send. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -90,19 +104,15 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             transition={{ duration: 0.3 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <button className={styles.closeButton} onClick={onClose}>
-              ✕
-            </button>
-            <h2 className={styles.preorder}>Preorder / Contact Us</h2>
+            <button className={styles.closeButton} onClick={onClose}>✕</button>
+            <h2 className={styles.preorder}>Preorder</h2>
             <form onSubmit={handleSubmit} className={styles.form}>
               <div className={styles.div}>
-                <label className={styles.label} htmlFor="name">
-                  Name
-                </label>
+                <label className={styles.label} htmlFor="name">Name</label>
                 <input
                   id="name"
-                  type="text"
                   name="name"
+                  type="text"
                   placeholder="Your Name"
                   value={formData.name}
                   onChange={handleChange}
@@ -111,13 +121,11 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               </div>
 
               <div className={styles.div}>
-                <label className={styles.label} htmlFor="email">
-                  Email
-                </label>
+                <label className={styles.label} htmlFor="email">Email</label>
                 <input
                   id="email"
-                  type="email"
                   name="email"
+                  type="email"
                   placeholder="Your Email"
                   value={formData.email}
                   onChange={handleChange}
@@ -126,13 +134,12 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               </div>
 
               <div className={styles.div}>
-                <label className={styles.label} htmlFor="date">
-                  Preferred Delivery Date
-                </label>
+                <label className={styles.label} htmlFor="date">Delivered Before/On?</label>
                 <input
                   id="date"
-                  type="date"
                   name="date"
+                  type="date"
+                  min={getMinDate()}
                   value={formData.date}
                   onChange={handleChange}
                   required
@@ -140,9 +147,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               </div>
 
               <div className={styles.div}>
-                <label className={styles.label} htmlFor="preference">
-                  Customization Preference
-                </label>
+                <label className={styles.label} htmlFor="preference">Customization Preference</label>
                 <select
                   id="preference"
                   name="preference"
@@ -165,7 +170,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   placeholder="Your Message / Custom Details"
                   value={formData.message}
                   onChange={handleChange}
-                  required
+                  required={formData.preference !== "Exact"}
                 />
               </div>
 
